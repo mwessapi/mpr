@@ -1,0 +1,2520 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>متولي الوصابي - مطور ومصمم محترف</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* تم دمج جميع أنماط CSS هنا */
+    :root {
+      --primary: #4338ca;
+      --primary-light: #6366f1;
+      --primary-dark: #3730a3;
+      --accent: #8b5cf6;
+      --light: #e0e7ff;
+      --dark: #1e293b;
+      --gray: #4b5563;
+      --white: #ffffff;
+      --success: #10b981;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+      --bg-primary: #f0f4ff;
+      --bg-secondary: #e0e7ff;
+      --text-primary: #1e293b;
+      --text-secondary: #4b5563;
+      --card-bg: rgba(255, 255, 255, 0.92);
+      --card-border: rgba(224, 231, 255, 0.6);
+    }
+    
+    .dark-mode {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --text-primary: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --card-bg: rgba(30, 41, 59, 0.92);
+      --card-border: rgba(51, 65, 85, 0.6);
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Cairo', sans-serif;
+      direction: rtl;
+      background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+      color: var(--text-primary);
+      line-height: 1.7;
+      overflow-x: hidden;
+      position: relative;
+      scroll-behavior: smooth;
+      transition: background 0.5s ease;
+    }
+    
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(103, 58, 183, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(67, 56, 202, 0.1) 0%, transparent 40%);
+      z-index: -1;
+    }
+
+    /* Preloader */
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.6s ease;
+    }
+
+    #preloader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .spinner {
+      border: 8px solid rgba(255, 255, 255, 0.3);
+      border-top: 8px solid var(--white);
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* شريط التقدم */
+    .progress-container {
+      width: 100%;
+      height: 5px;
+      background: transparent;
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 2000;
+    }
+    
+    .progress-bar {
+      height: 5px;
+      background: linear-gradient(to right, var(--accent), var(--primary));
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    
+    /* شعار شخصي */
+    .personal-logo {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--white);
+      background: linear-gradient(45deg, var(--accent), var(--primary));
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      transition: var(--transition);
+    }
+    
+    .personal-logo:hover {
+      transform: scale(1.1);
+    }
+    
+    header {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: var(--white);
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(67, 56, 202, 0.4);
+      position: relative;
+      overflow: hidden;
+      padding-top: 5rem;
+    }
+    
+    header::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: 
+        radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%),
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 10px,
+          rgba(255,255,255,0.05) 10px,
+          rgba(255,255,255,0.05) 20px
+        );
+      z-index: 0;
+      animation: rotate 60s linear infinite;
+    }
+    
+    header > * {
+      position: relative;
+      z-index: 1;
+    }
+    
+    nav {
+      background: rgba(99, 102, 241, 0.98);
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 1rem;
+      gap: 1rem;
+      box-shadow: inset 0 -2px 0 rgba(255,255,255,0.2);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      transition: var(--transition);
+    }
+    
+    nav.scrolled {
+      padding: 0.7rem;
+      box-shadow: 0 4px 20px rgba(67, 56, 202, 0.3);
+    }
+    
+    nav a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 700;
+      padding: 0.7rem 1.4rem;
+      border-radius: 50px;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.05rem;
+    }
+    
+    nav a::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateX(-100%);
+      transition: transform 0.4s ease;
+      z-index: -1;
+    }
+    
+    nav a:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    nav a:hover::before {
+      transform: translateX(0);
+    }
+    
+    nav a i {
+      font-size: 1.1rem;
+    }
+    
+    .hero {
+      position: relative;
+      text-align: center;
+      color: var(--white);
+      background: linear-gradient(rgba(67, 56, 202, 0.85), rgba(55, 48, 163, 0.9)), 
+                  url('https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80') no-repeat center/cover;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      padding: 0 1rem;
+    }
+
+    /* Particle background */
+    #particles-js {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .hero .profile-img-container {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-bottom: 2rem;
+      border: 5px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.2), 0 10px 20px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 1s ease forwards;
+      animation-delay: 0.2s;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero .profile-img-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .hero .profile-img-container:hover img {
+      transform: scale(1.05);
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 1rem;
+      max-width: 900px;
+      animation: fadeInUp 1s ease forwards;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .hero h2 {
+      font-size: 3.8rem;
+      margin-bottom: 1.2rem;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      line-height: 1.2;
+      background: linear-gradient(45deg, var(--accent), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    .hero p {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      font-weight: 300;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+    
+    .hero-quote {
+      font-style: italic;
+      margin-top: 2rem;
+      padding: 1rem;
+      border-right: 3px solid var(--accent);
+      font-size: 1.3rem;
+      max-width: 700px;
+      margin: 2rem auto 0;
+      animation: fadeIn 2s ease forwards;
+      animation-delay: 0.5s;
+      opacity: 0;
+      position: relative;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      backdrop-filter: blur(5px);
+    }
+    
+    .cta-button {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--white);
+      padding: 1rem 2.8rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 1.2rem;
+      transition: var(--transition);
+      box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      margin-top: 1.5rem;
+      animation: pulse 2s infinite;
+      position: relative;
+      overflow: hidden;
+      z-index: 2;
+    }
+    
+    .cta-button::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+    }
+    
+    .cta-button:hover {
+      background: #7c3aed;
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(139, 92, 246, 0.6);
+      animation: none;
+    }
+    
+    .cta-button:hover::after {
+      transform: translateX(100%);
+    }
+    
+    .section {
+      padding: 5rem 1.5rem;
+      max-width: 1300px;
+      margin: 2rem auto;
+      background: var(--card-bg);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+      border: 1px solid var(--card-border);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease, box-shadow 0.3s ease;
+    }
+    
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .section:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(67, 56, 202, 0.18);
+    }
+    
+    .section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 5px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--accent));
+      transition: width 0.4s ease;
+    }
+    
+    .section:hover::before {
+      width: 8px;
+    }
+    
+    .section h2 {
+      color: var(--primary);
+      border-bottom: 3px solid var(--primary-light);
+      padding-bottom: 0.8rem;
+      margin-bottom: 3rem;
+      font-size: 2.4rem;
+      position: relative;
+      display: inline-block;
+      padding-right: 1.5rem;
+      padding-left: 4rem;
+    }
+    
+    .section h2 i {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+    }
+    
+    .section h2::after {
+      content: "";
+      position: absolute;
+      bottom: -3px;
+      right: 0;
+      width: 50%;
+      height: 3px;
+      background: var(--accent);
+      transition: width 0.4s ease;
+    }
+    
+    .section:hover h2::after {
+      width: 100%;
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2.2rem;
+    }
+    
+    .card {
+      background: linear-gradient(145deg, var(--card-bg), #f8fafc);
+      padding: 2.2rem 1.8rem;
+      border-radius: 18px;
+      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.12);
+      transition: var(--transition);
+      border: 1px solid var(--card-border);
+      position: relative;
+      overflow: hidden;
+      transform: translateY(30px);
+      opacity: 0;
+      transition: transform 0.6s ease, opacity 0.6s ease, box-shadow 0.3s ease;
+    }
+    
+    .card.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      transform: translateY(-100%);
+      transition: transform 0.4s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 18px 35px rgba(99, 102, 241, 0.25);
+    }
+    
+    .card:hover::before {
+      transform: translateY(0);
+    }
+    
+    .card i {
+      font-size: 2.8rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      display: inline-block;
+      transition: var(--transition);
+      background: rgba(99, 102, 241, 0.1);
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .card:hover i {
+      color: var(--accent);
+      transform: scale(1.1);
+      background: rgba(139, 92, 246, 0.15);
+    }
+    
+    .card h3 {
+      color: var(--primary-dark);
+      margin-bottom: 1.2rem;
+      font-size: 1.5rem;
+      position: relative;
+      padding-bottom: 0.8rem;
+    }
+    
+    .card h3::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 50px;
+      height: 3px;
+      background: var(--accent);
+      transition: width 0.4s ease;
+    }
+    
+    .card:hover h3::after {
+      width: 80px;
+    }
+    
+    .card p {
+      color: var(--gray);
+      line-height: 1.8;
+      font-size: 1.05rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .card.visible p {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .project-card {
+      background: linear-gradient(145deg, var(--card-bg), #f8fafc);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.12);
+      transition: var(--transition);
+      position: relative;
+      transform: translateY(30px);
+      opacity: 0;
+      transition: transform 0.6s ease, opacity 0.6s ease;
+      border: 1px solid var(--card-border);
+    }
+    
+    .project-card.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    
+    .project-card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .project-card .project-info {
+      padding: 1.8rem;
+    }
+    
+    .project-card h3 {
+      color: var(--primary-dark);
+      margin-bottom: 1rem;
+      font-size: 1.4rem;
+      position: relative;
+      padding-bottom: 0.8rem;
+    }
+    
+    .project-card h3::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 40px;
+      height: 3px;
+      background: var(--accent);
+    }
+    
+    .project-card p {
+      color: var(--gray);
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+    
+    .project-card .project-link {
+      display: inline-flex;
+      align-items: center;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+      gap: 8px;
+      transition: var(--transition);
+      font-size: 1.1rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .project-card .project-link i {
+      transition: transform 0.3s ease;
+    }
+    
+    .project-card .project-link:hover {
+      color: var(--primary);
+    }
+    
+    .project-card .project-link:hover i {
+      transform: translateX(5px);
+    }
+    
+    .project-card:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 18px 35px rgba(99, 102, 241, 0.25);
+    }
+    
+    .project-card:hover img {
+      transform: scale(1.05);
+    }
+    
+    /* نموذج الاتصال */
+    .contact-form {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 2.5rem;
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      margin-top: 3rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .form-group {
+      margin-bottom: 1.8rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.7rem;
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+    
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid rgba(99, 102, 241, 0.2);
+      border-radius: 12px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 1rem;
+      transition: var(--transition);
+      background: var(--card-bg);
+      color: var(--text-primary);
+    }
+    
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    }
+    
+    .form-group textarea {
+      min-height: 180px;
+      resize: vertical;
+    }
+    
+    .submit-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-family: 'Cairo', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 5px 15px rgba(67, 56, 202, 0.4);
+    }
+    
+    .submit-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(67, 56, 202, 0.5);
+    }
+    
+    .submit-btn:active {
+      transform: translateY(1px);
+    }
+    
+    footer {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: var(--white);
+      text-align: center;
+      padding: 4rem 1rem 2rem;
+      margin-top: 5rem;
+      position: relative;
+      overflow: hidden;
+      clip-path: polygon(0 5%, 100% 0, 100% 100%, 0% 100%);
+    }
+    
+    footer::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.05) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(255,255,255,0.05) 0%, transparent 40%);
+      z-index: 0;
+    }
+    
+    footer > * {
+      position: relative;
+      z-index: 1;
+    }
+    
+    .footer-content {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 3rem;
+      text-align: right;
+      margin-bottom: 3rem;
+    }
+    
+    .footer-column h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1.8rem;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 0.8rem;
+    }
+    
+    .footer-column h3::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 60px;
+      height: 4px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    
+    .footer-column ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    
+    .footer-column ul li {
+      margin-bottom: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.05rem;
+    }
+    
+    .footer-column ul li i {
+      color: var(--accent);
+      font-size: 1.3rem;
+    }
+    
+    .copyright {
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding-top: 2rem;
+      margin-top: 2rem;
+      font-size: 1.05rem;
+      opacity: 0.9;
+    }
+    
+    button.lang-switch {
+      position: fixed;
+      top: 85px;
+      right: 20px;
+      z-index: 1000;
+      background: var(--primary-light);
+      border: none;
+      padding: 0.8rem 1.6rem;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--white);
+      box-shadow: 0 4px 20px rgba(67, 56, 202, 0.4);
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1rem;
+    }
+    
+    button.lang-switch:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 25px rgba(67, 56, 202, 0.6);
+    }
+    
+    body.lang-en [lang="ar"] { display: none; }
+    body:not(.lang-en) [lang="en"] { display: none; }
+    
+    .social {
+      margin-top: 2.5rem;
+      text-align: center;
+    }
+    
+    .social a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 55px;
+      height: 55px;
+      margin: 0 12px;
+      border-radius: 50%;
+      background: var(--white);
+      color: var(--primary);
+      font-size: 1.6rem;
+      transition: var(--transition);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .social a::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, var(--primary), var(--accent));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 1;
+    }
+    
+    .social a i {
+      position: relative;
+      z-index: 2;
+    }
+    
+    .social a:hover {
+      transform: translateY(-10px) scale(1.1);
+      box-shadow: 0 10px 25px rgba(139, 92, 246, 0.45);
+    }
+    
+    .social a:hover::after {
+      opacity: 1;
+    }
+    
+    .social a:hover i {
+      color: white;
+    }
+    
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    
+    ul li {
+      margin-bottom: 1.1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.1rem;
+    }
+    
+    ul li i {
+      color: var(--primary);
+      font-size: 1.3rem;
+      min-width: 30px;
+      background: rgba(99, 102, 241, 0.1);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* قسم السيرة الذاتية الجديد */
+    .cv-section {
+      padding: 2rem;
+      background: #f8f9fa;
+      border-radius: 15px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    
+    .cv-section h3 {
+      color: var(--primary);
+      border-bottom: 2px solid var(--primary-light);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .cv-item {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px dashed #e0e0e0;
+      position: relative;
+      padding-left: 30px;
+    }
+    
+    .cv-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    
+    .cv-item h4 {
+      color: var(--primary-dark);
+      margin-bottom: 0.3rem;
+    }
+    
+    .cv-item .date {
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    
+    .cv-item p {
+      color: var(--gray);
+      line-height: 1.7;
+    }
+    
+    /* الخط الزمني */
+    .timeline {
+      position: relative;
+      padding-left: 30px;
+    }
+    
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 10px;
+      top: 0;
+      height: 100%;
+      width: 2px;
+      background: var(--primary-light);
+    }
+    
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2rem;
+      padding-left: 30px;
+    }
+    
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 3px solid var(--white);
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+    
+    /* Scroll to Top Button */
+    #scrollToTopBtn {
+      display: none;
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 999;
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      cursor: pointer;
+      transition: var(--transition);
+      opacity: 0.8;
+    }
+
+    #scrollToTopBtn:hover {
+      background-color: var(--primary-dark);
+      opacity: 1;
+      transform: translateY(-5px);
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.6);
+      }
+      70% {
+        box-shadow: 0 0 0 20px rgba(139, 92, 246, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(139, 92, 246, 0);
+      }
+    }
+    
+    @keyframes rotate {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Project Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 10000;
+      overflow-y: auto;
+      padding: 2rem;
+    }
+    
+    .modal-content {
+      background: var(--card-bg);
+      max-width: 900px;
+      margin: 2rem auto;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      position: relative;
+    }
+    
+    .close-modal {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 2rem;
+      color: var(--text-primary);
+      cursor: pointer;
+      z-index: 10;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      transition: var(--transition);
+    }
+    
+    .close-modal:hover {
+      background: var(--accent);
+      color: white;
+      transform: rotate(90deg);
+    }
+    
+    .modal-header {
+      padding: 2rem;
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: white;
+      position: relative;
+    }
+    
+    .modal-header h3 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    .modal-body {
+      padding: 2rem;
+    }
+    
+    .modal-images {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .modal-images img {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: var(--transition);
+    }
+    
+    .modal-images img:hover {
+      transform: scale(1.03);
+    }
+    
+    .modal-body p {
+      margin-bottom: 1.5rem;
+      line-height: 1.8;
+      font-size: 1.1rem;
+    }
+    
+    .modal-features {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 1rem;
+      background: rgba(99, 102, 241, 0.1);
+      border-radius: 10px;
+    }
+    
+    .feature-item i {
+      color: var(--accent);
+      font-size: 1.5rem;
+      min-width: 40px;
+    }
+    
+    .modal-footer {
+      padding: 1rem 2rem 2rem;
+      text-align: center;
+    }
+    
+    .visit-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: var(--transition);
+      box-shadow: 0 5px 15px rgba(67, 56, 202, 0.4);
+    }
+    
+    .visit-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(67, 56, 202, 0.5);
+    }
+    
+    /* Theme Toggle */
+    .theme-toggle {
+      position: fixed;
+      top: 85px;
+      left: 20px;
+      z-index: 1000;
+      background: var(--primary-light);
+      border: none;
+      padding: 0.8rem;
+      border-radius: 50%;
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--white);
+      box-shadow: 0 4px 20px rgba(67, 56, 202, 0.4);
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 45px;
+      height: 45px;
+    }
+    
+    .theme-toggle:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 25px rgba(67, 56, 202, 0.6);
+    }
+    
+    /* Skill Bars */
+    .skill-bar {
+      background: rgba(99, 102, 241, 0.1);
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+    
+    .skill-progress {
+      background: linear-gradient(to right, var(--accent), var(--primary));
+      height: 10px;
+      border-radius: 10px;
+      position: relative;
+      transition: width 1s ease;
+    }
+    
+    .skill-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+    
+    .skill-name {
+      font-weight: 600;
+    }
+    
+    .skill-value {
+      color: var(--accent);
+      font-weight: 700;
+    }
+    
+    /* Testimonials */
+    .testimonial-card {
+      background: linear-gradient(145deg, var(--card-bg), #f8fafc);
+      padding: 1.5rem;
+      border-radius: 18px;
+      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.12);
+      position: relative;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--card-border);
+    }
+    
+    .testimonial-content {
+      font-style: italic;
+      position: relative;
+      padding: 0 1.5rem;
+    }
+    
+    .testimonial-content:before,
+    .testimonial-content:after {
+      content: '"';
+      font-size: 3rem;
+      position: absolute;
+      color: var(--primary-light);
+      opacity: 0.3;
+    }
+    
+    .testimonial-content:before {
+      top: -20px;
+      left: -10px;
+    }
+    
+    .testimonial-content:after {
+      bottom: -40px;
+      right: -10px;
+    }
+    
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      margin-top: 1rem;
+    }
+    
+    .testimonial-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      margin-left: 1rem;
+    }
+    
+    .testimonial-info {
+      flex: 1;
+    }
+    
+    .testimonial-name {
+      font-weight: bold;
+      color: var(--text-primary);
+    }
+    
+    .testimonial-role {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    
+    /* Certifications */
+    .certification-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+    
+    .certification-card {
+      background: linear-gradient(145deg, var(--card-bg), #f8fafc);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.12);
+      transition: var(--transition);
+      border: 1px solid var(--card-border);
+    }
+    
+    .certification-image {
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--primary-light);
+    }
+    
+    .certification-image i {
+      font-size: 4rem;
+      color: white;
+    }
+    
+    .certification-info {
+      padding: 1.5rem;
+    }
+    
+    .certification-title {
+      color: var(--primary-dark);
+      margin-bottom: 0.5rem;
+    }
+    
+    .certification-org {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+    
+    .certification-link {
+      display: inline-flex;
+      align-items: center;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+      gap: 8px;
+      transition: var(--transition);
+    }
+
+    /* Floating elements */
+    .floating {
+      animation: floating 3s ease-in-out infinite;
+    }
+    
+    @keyframes floating {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 992px) {
+      .hero h2 {
+        font-size: 3.2rem;
+      }
+      
+      .hero p {
+        font-size: 1.3rem;
+      }
+      
+      .section {
+        padding: 4rem 1.5rem;
+      }
+      
+      .grid {
+        gap: 1.8rem;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .hero {
+        height: 75vh;
+      }
+      
+      .hero h2 {
+        font-size: 2.6rem;
+      }
+      
+      .hero p {
+        font-size: 1.2rem;
+      }
+      
+      .hero-quote {
+        font-size: 1.1rem;
+      }
+      
+      nav {
+        gap: 0.6rem;
+      }
+      
+      nav a {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.95rem;
+      }
+      
+      .section {
+        padding: 3.5rem 1.2rem;
+      }
+      
+      .section h2 {
+        font-size: 2rem;
+        padding-left: 3.5rem;
+      }
+      
+      .section h2 i {
+        width: 40px;
+        height: 40px;
+        font-size: 1.3rem;
+      }
+      
+      .footer-content {
+        text-align: center;
+        gap: 2.5rem;
+      }
+      
+      .footer-column h3::after {
+        right: 50%;
+        transform: translateX(50%);
+      }
+      
+      .contact-form {
+        padding: 2rem;
+      }
+      
+      #scrollToTopBtn {
+        bottom: 20px;
+        right: 20px;
+      }
+      
+      button.lang-switch {
+        top: 75px;
+        padding: 0.7rem 1.4rem;
+        font-size: 0.9rem;
+      }
+      
+      .personal-logo {
+        top: 15px;
+        left: 15px;
+        width: 45px;
+        height: 45px;
+        font-size: 1.5rem;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .hero h2 {
+        font-size: 2.2rem;
+      }
+      
+      .hero p {
+        font-size: 1.05rem;
+      }
+      
+      .cta-button {
+        padding: 0.9rem 2.2rem;
+        font-size: 1.05rem;
+      }
+      
+      .card {
+        padding: 1.8rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="preloader">
+  <div class="spinner"></div>
+</div>
+
+<button class="theme-toggle" id="themeToggle">
+  <i class="fas fa-moon"></i>
+</button>
+
+<button class="lang-switch" onclick="toggleLanguage()">
+  <i class="fas fa-globe"></i> English
+</button>
+
+<div class="progress-container">
+  <div class="progress-bar" id="myBar"></div>
+</div>
+
+<div class="personal-logo floating">MW</div>
+
+<header>
+  <h1 lang="ar">متولي الوصابي</h1>
+  <h1 lang="en">Metwally Al-Wessapi</h1>
+  <p lang="ar">مطور ومصمم محترف | خبير حلول رقمية</p>
+  <p lang="en">Professional Developer & Designer | Digital Solutions Expert</p>
+</header>
+
+<nav id="navbar">
+  <a href="#about" lang="ar"><i class="fas fa-user"></i> نبذة</a>
+  <a href="#cv" lang="ar"><i class="fas fa-graduation-cap"></i> السيرة الذاتية</a>
+  <a href="#skills" lang="ar"><i class="fas fa-laptop-code"></i> مهاراتي</a>
+  <a href="#services" lang="ar"><i class="fas fa-cogs"></i> خدماتي</a>
+  <a href="#projects" lang="ar"><i class="fas fa-project-diagram"></i> مشاريعي</a>
+  <a href="#contact" lang="ar"><i class="fas fa-envelope"></i> تواصل</a>
+
+  <a href="#about" lang="en"><i class="fas fa-user"></i> About</a>
+  <a href="#cv" lang="en"><i class="fas fa-graduation-cap"></i> CV</a>
+  <a href="#skills" lang="en"><i class="fas fa-laptop-code"></i> Skills</a>
+  <a href="#services" lang="en"><i class="fas fa-cogs"></i> Services</a>
+  <a href="#projects" lang="en"><i class="fas fa-project-diagram"></i> Projects</a>
+  <a href="#contact" lang="en"><i class="fas fa-envelope"></i> Contact</a>
+</nav>
+
+<section class="hero">
+  <div id="particles-js"></div>
+  <div class="hero-content">
+    <div class="profile-img-container floating">
+      <img src="https://imgg.io/images/2025/07/12/7a81fb78e82ed43fedf003c6b6eac8ca.jpg" alt="7a81fb78e82ed43fedf003c6b6eac8ca.jpg" border="0" />" border="0" />" alt="صورة متولي الوصابي الشخصية">
+    </div>
+    <h2 lang="ar">تحويل الأفكار إلى واقع رقمي متميز</h2>
+    <p lang="ar">مطور ومصمم يمني شاب، أقدم حلولاً رقمية إبداعية تلبي احتياجات العصر</p>
+    
+    <h2 lang="en">Transforming Ideas into Outstanding Digital Reality</h2>
+    <p lang="en">A young Yemeni developer & designer, providing creative digital solutions for modern needs</p>
+    
+    <div class="hero-quote" lang="ar">
+      "الجودة ليست فعلًا، بل هي عادة. الإبداع يجعل المستحيل ممكنًا"
+    </div>
+    <div class="hero-quote" lang="en">
+      "Quality is not an act, it is a habit. Creativity makes the impossible possible"
+    </div>
+    
+    <a href="#contact" class="cta-button floating" lang="ar">ابدأ مشروعك معي الآن</a>
+    <a href="#contact" class="cta-button floating" lang="en">Start Your Project Now</a>
+  </div>
+</section>
+
+<section id="about" class="section">
+  <h2 lang="ar"><i class="fas fa-user-circle"></i>... من أنا؟</h2>
+  <h2 lang="en"><i class="fas fa-user-circle"></i> About Me</h2>
+  
+  <div class="grid">
+    <div class="card">
+      <i class="fas fa-user-graduate"></i>
+      <h3 lang="ar">خبرة ومهارات</h3>
+      <p lang="ar">أنا متولي الوصابي، شاب يمني طموح من محافظة ذمار، أعمل كمطور ومصمم في العاصمة صنعاء. أمتلك خبرة واسعة في مجالات التصميم الجرافيكي، تطوير الويب، وتصميم الهوية البصرية. أسعى دائمًا لتقديم حلول إبداعية تلبي احتياجات عملائي بأعلى معايير الجودة.</p>
+      <h3 lang="en">Experience & Skills</h3>
+      <p lang="en">I am Metwally Al-Wessapi, an ambitious young Yemeni from Dhamar province, working as a developer and designer in Sana'a. I have extensive experience in graphic design, web development, and visual identity design. I always strive to provide creative solutions that meet my clients' needs with the highest quality standards.</p>
+    </div>
+    
+    <div class="card">
+      <i class="fas fa-bullseye"></i>
+      <h3 lang="ar">رؤيتي وأهدافي</h3>
+      <p lang="ar">هدفي هو المساهمة في تطوير المجتمع التقني في اليمن والمنطقة العربية من خلال تقديم حلول رقمية مبتكرة. أسعى لإنشاء علامة تجارية مميزة تعكس جودة العمل والإبداع في كل مشروع. كما أهدف لتدريب الشباب ونقل خبراتي التقنية للأجيال القادمة.</p>
+      <h3 lang="en">My Vision & Goals</h3>
+      <p lang="en">My goal is to contribute to the development of the tech community in Yemen and the Arab region by providing innovative digital solutions. I seek to create a distinctive brand that reflects quality work and creativity in every project. I also aim to train youth and transfer my technical expertise to future generations.</p>
+    </div>
+  </div>
+</section>
+
+<section id="cv" class="section">
+  <h2 lang="ar"><i class="fas fa-file-alt"></i> ....السيرة الذاتية</h2>
+  <h2 lang="en"><i class="fas fa-file-alt"></i> Curriculum Vitae</h2>
+  
+  <div class="cv-section">
+    <h3><i class="fas fa-user"></i> <span lang="ar">المعلومات الشخصية</span><span lang="en">Personal Information</span></h3>
+    <div class="cv-item">
+      <h4 lang="ar">الاسم الكامل: متولي الوصابي</h4>
+      <h4 lang="en">Full Name: Metwally Al-Wessapi</h4>
+      <span class="date" lang="ar">تاريخ الميلاد: 2006</span>
+      <span class="date" lang="en">Date of Birth: 2006</span>
+      <p lang="ar">الجنسية: يمني</p>
+      <p lang="en">Nationality: Yemeni</p>
+      <p lang="ar">الحالة الاجتماعية: أعزب</p>
+      <p lang="en">Marital Status: Single</p>
+    </div>
+  </div>
+  
+  <div class="cv-section">
+    <h3><i class="fas fa-graduation-cap"></i> <span lang="ar">المؤهلات التعليمية</span><span lang="en">Education</span></h3>
+    <div class="timeline">
+      <div class="timeline-item">
+        <h4 lang="ar">الثانوية العامة</h4>
+        <h4 lang="en">High School</h4>
+        <span class="date" lang="ar">مدرسة كبود الثانوية - تخرجت في عام 2022</span>
+        <span class="date" lang="en">Koboud Secondary School - Graduated in 2022</span>
+      </div>
+      <div class="timeline-item">
+        <h4 lang="ar">المعاهد والدورات التدريبية</h4>
+        <h4 lang="en">Institutes & Training Courses</h4>
+        <p lang="ar">معهد A2Z – دورات حاسوب ولغات</p>
+        <p lang="en">A2Z Institute - Computer and language courses</p>
+        <p lang="ar">معهد الأمجاد – لغة إنجليزية</p>
+        <p lang="en">Al-Amjad Institute - English language</p>
+        <p lang="ar">معهد الليالي – لغة إنجليزية</p>
+        <p lang="en">Al-Layali Institute - English language</p>
+      </div>
+      <div class="timeline-item">
+        <h4 lang="ar">الجامعة</h4>
+        <h4 lang="en">University</h4>
+        <span class="date" lang="ar">جامعة اليمن الأردنية - كلية الحاسوب - تخصص تقنية معلومات (IT) - سنة 2024</span>
+        <span class="date" lang="en">Yemen Jordanian University - College of Computer - IT specialization - 2024</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills" class="section">
+  <h2 lang="ar"><i class="fas fa-tools"></i> ...مهاراتي الاحترافية</h2>
+  <h2 lang="en"><i class="fas fa-tools"></i> Professional Skills</h2>
+  
+  <div class="grid">
+    <div class="card">
+      <i class="fas fa-paint-brush"></i>
+      <h3 lang="ar">التصميم الجرافيكي</h3>
+      <p lang="ar">تصميم إبداعي باستخدام Adobe Photoshop, Illustrator, Canva مع الالتزام بأحدث اتجاهات التصميم وضمان الجودة العالية والهوية البصرية المتماسكة.</p>
+      <h3 lang="en">Graphic Design</h3>
+      <p lang="en">Creative design using Adobe Photoshop, Illustrator, Canva, adhering to the latest design trends and ensuring high quality and cohesive visual identity.</p>
+      <div class="skill-bar" data-value="95">
+        <div class="skill-info">
+          <span class="skill-name" lang="ar">فوتوشوب</span>
+          <span class="skill-name" lang="en">Photoshop</span>
+          <span class="skill-value">95%</span>
+        </div>
+        <div class="skill-progress"></div>
+      </div>
+      <div class="skill-bar" data-value="90">
+        <div class="skill-info">
+          <span class="skill-name" lang="ar">اليستريتور</span>
+          <span class="skill-name" lang="en">Illustrator</span>
+          <span class="skill-value">90%</span>
+        </div>
+        <div class="skill-progress"></div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <i class="fas fa-code"></i>
+      <h3 lang="ar">تطوير الويب والبرمجة</h3>
+      <p lang="ar">برمجة وتطوير مواقع وتطبيقات باستخدام HTML, CSS, JavaScript, ++C مع التركيز على الأداء العالي وتجربة المستخدم المثالية.</p>
+      <h3 lang="en">Web Development & Programming</h3>
+      <p lang="en">Programming and development of websites and applications using HTML, CSS, JavaScript, C++, focusing on high performance and optimal user experience.</p>
+      <div class="skill-bar" data-value="95">
+        <div class="skill-info">
+          <span class="skill-name">HTML/CSS</span>
+          <span class="skill-value">95%</span>
+        </div>
+        <div class="skill-progress"></div>
+      </div>
+      <div class="skill-bar" data-value="90">
+        <div class="skill-info">
+          <span class="skill-name">JavaScript</span>
+          <span class="skill-value">90%</span>
+        </div>
+        <div class="skill-progress"></div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <i class="fas fa-drafting-compass"></i>
+      <h3 lang="ar">الهوية البصرية المتكاملة</h3>
+      <p lang="ar">تصميم هوية بصرية متكاملة تشمل الشعارات، البنرات، الملفات التعريفية، مع الحفاظ على الاتساق والتميز في الهوية البصرية للعلامة التجارية.</p>
+      <h3 lang="en">Comprehensive Visual Identity</h3>
+      <p lang="en">Designing a comprehensive visual identity including logos, banners, profiles, while maintaining consistency and distinctiveness in the brand's visual identity.</p>
+      <div class="skill-bar" data-value="90">
+        <div class="skill-info">
+          <span class="skill-name" lang="ar">تصميم الشعارات</span>
+          <span class="skill-name" lang="en">Logo Design</span>
+          <span class="skill-value">90%</span>
+        </div>
+        <div class="skill-progress"></div>
+      </div>
+      <div class="skill-bar" data-value="85">
+        <div class="skill-info">
+          <span class="skill-name" lang="ar">الهوية البصرية</span>
+          <span class="skill-name" lang="en">Visual Identity</span>
+          <span class="skill-value">85%</span>
+        </div>
+        <div class="skill-progress"></div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <i class="fas fa-robot"></i>
+      <h3 lang="ar">الذكاء الاصطناعي والهندسة</h3>
+      <p lang="ar">خبرة في مفاهيم الذكاء الاصطناعي، تعلم الآلة، وهندسة النظم، مع القدرة على تطبيقها في حل المشكلات المعقدة وتطوير الابتكارات التقنية.</p>
+      <h3 lang="en">Artificial Intelligence & Engineering</h3>
+      <p lang="en">Expertise in AI concepts, machine learning, and systems engineering, with the ability to apply them in solving complex problems and developing technological innovations.</p>
+      <div class="skill-bar" data-value="85">
+        <div class="skill-info">
+          <span class="skill-name" lang="ar">تعلم الآلة</span>
+          <span class="skill-name" lang="en">Machine Learning</span>
+          <span class="skill-value">85%</span>
+        </div>
+        <div class="skill-progress"></div>
+      </div>
+      <div class="skill-bar" data-value="80">
+        <div class="skill-info">
+          <span class="skill-name" lang="ar">تحليل البيانات</span>
+          <span class="skill-name" lang="en">Data Analysis</span>
+          <span class="skill-value">80%</span>
+        </div>
+        <div class="skill-progress"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="section">
+  <h2 lang="ar"><i class="fas fa-concierge-bell"></i>... خدماتي الاحترافية</h2>
+  <h2 lang="en"><i class="fas fa-concierge-bell"></i> Professional Services</h2>
+  
+  <div class="grid">
+    <div class="card">
+      <i class="fas fa-palette"></i>
+      <h3 lang="ar">تصميم شعارات احترافية</h3>
+      <p lang="ar">تصميم شعارات مبتكرة تعبر عن هوية علامتك التجارية بدقة، مع ضمان التميز والاحترافية والجودة العالية التي تترك انطباعًا دائمًا.</p>
+      <h3 lang="en">Professional Logo Design</h3>
+      <p lang="en">Designing innovative logos that accurately express your brand identity, ensuring distinctiveness, professionalism, and high quality that leave a lasting impression.</p>
+    </div>
+    
+    <div class="card">
+      <i class="fas fa-laptop-code"></i>
+      <h3 lang="ar">تطوير مواقع إلكترونية</h3>
+      <p lang="ar">تصميم وتطوير مواقع إلكترونية متجاوبة وسريعة وآمنة، مع مراعاة معايير السيو وتجربة المستخدم المثالية لتحقيق أهدافك التجارية.</p>
+      <h3 lang="en">Website Development</h3>
+      <p lang="en">Designing and developing responsive, fast, and secure websites, considering SEO standards and optimal user experience to achieve your business goals.</p>
+    </div>
+    
+    <div class="card">
+      <i class="fas fa-store"></i>
+      <h3 lang="ar">صانع متجر إلكتروني</h3>
+      <p lang="ar">إنشاء متاجر إلكترونية متكاملة مع أنظمة دفع آمنة، إدارة مخزون، وتجربة مستخدم استثنائية، مع دعم فني متكامل.</p>
+      <h3 lang="en">Online Store Creator</h3>
+      <p lang="en">Creating integrated e-commerce stores with secure payment systems, inventory management, and exceptional user experience, with comprehensive technical support.</p>
+    </div>
+    
+    <div class="card">
+      <i class="fas fa-id-card"></i>
+      <h3 lang="ar">هوية بصرية متكاملة</h3>
+      <p lang="ar">تصميم هوية بصرية متكاملة تشمل جميع عناصر علامتك التجارية، مع ضمان الاتساق والتميز في كل التفاصيل لتعزيز حضورك الرقمي.</p>
+      <h3 lang="en">Complete Visual Identity</h3>
+      <p lang="en">Designing a comprehensive visual identity that includes all elements of your brand, ensuring consistency and excellence in every detail to enhance your digital presence.</p>
+    </div>
+    
+    <div class="card">
+      <i class="fas fa-gamepad"></i>
+      <h3 lang="ar">شحن ألعاب وبرامج</h3>
+      <p lang="ar">خدمة شحن رصيد سريعة وآمنة لأشهر الألعاب والبرامج، مع دعم فني متكامل لضمان تجربة مستخدم سلسة وممتعة.</p>
+      <h3 lang="en">Game & Software Recharge</h3>
+      <p lang="en">Fast and secure recharge service for popular games and software, with comprehensive technical support to ensure a smooth and enjoyable user experience.</p>
+    </div>
+    
+    <div class="card">
+      <i class="fas fa-file-pdf"></i>
+      <h3 lang="ar">تصميم ملفات PDF تفاعلية</h3>
+      <p lang="ar">إعداد وتصميم ملفات PDF احترافية وتفاعلية لعرض محتواك بشكل جذاب ومؤثر، مع دعم كافة العناصر التفاعلية والوسائط المتعددة.</p>
+      <h3 lang="en">Interactive PDF Design</h3>
+      <p lang="en">Preparation and design of professional and interactive PDF files to present your content in an attractive and impactful way, with support for all interactive elements and multimedia.</p>
+    </div>
+    
+    <div class="card">
+      <i class="fas fa-mobile-alt"></i>
+      <h3 lang="ar">تصميم تطبيقات الجوال</h3>
+      <p lang="ar">تصميم واجهات مستخدم لتطبيقات الجوال باحترافية عالية، مع التركيز على البساطة والجماليات والوظائفية لتحقيق تجربة مستخدم استثنائية.</p>
+      <h3 lang="en">Mobile App Design</h3>
+      <p lang="en">Designing mobile app user interfaces with high professionalism, focusing on simplicity, aesthetics, and functionality to achieve an exceptional user experience.</p>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="section">
+  <h2 lang="ar"><i class="fas fa-folder-open"></i> ...مشاريعي المتميزة</h2>
+  <h2 lang="en"><i class="fas fa-folder-open"></i> Featured Projects</h2>
+  
+  <div class="grid">
+    <div class="project-card">
+      <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="براءة اختراع">
+      <div class="project-info">
+        <h3 lang="ar">براءة اختراع في مجال الذكاء الاصطناعي</h3>
+        <p lang="ar">تفاصيل عن براءة الاختراع الخاصة بي، التقنيات المستخدمة، وأهميتها في المجال. هذا المشروع يعكس قدرتي على الابتكار والتفكير خارج الصندوق.</p>
+        <a href="#" class="project-link" onclick="openProjectModal('ai-patent')" lang="ar">عرض التفاصيل <i class="fas fa-arrow-left"></i></a>
+        <h3 lang="en">Patent in Artificial Intelligence</h3>
+        <p lang="en">Details about my patent, the technologies used, and its significance in the field. This project reflects my ability to innovate and think outside the box.</p>
+        <a href="#" class="project-link" onclick="openProjectModal('ai-patent')" lang="en">View Details <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="مشروع تعلم آلة">
+      <div class="project-info">
+        <h3 lang="ar">نظام ذكي لتحليل البيانات</h3>
+        <p lang="ar">تطوير نظام يعتمد على تعلم الآلة لتحليل مجموعات بيانات ضخمة وتقديم رؤى قيمة لدعم اتخاذ القرار. تم تنفيذه باستخدام Python وTensorFlow.</p>
+        <a href="#" class="project-link" onclick="openProjectModal('data-system')" lang="ar">عرض المشروع <i class="fas fa-arrow-left"></i></a>
+        <h3 lang="en">Intelligent Data Analysis System</h3>
+        <p lang="en">Development of a machine learning-based system to analyze large datasets and provide valuable insights for decision-making. Implemented with Python and TensorFlow.</p>
+        <a href="#" class="project-link" onclick="openProjectModal('data-system')" lang="en">View Project <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  
+    <div class="project-card">
+      <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="تصميم شعار">
+      <div class="project-info">
+        <h3 lang="ar">هوية بصرية لشركة تقنية ناشئة</h3>
+        <p lang="ar">تصميم هوية بصرية متكاملة لشركة تقنية ناشئة، شملت الشعار، الألوان، الخطوط، وتطبيقات العلامة التجارية على مختلف المنصات.</p>
+        <a href="#" class="project-link" onclick="openProjectModal('visual-identity')" lang="ar">عرض المشروع <i class="fas fa-arrow-left"></i></a>
+        <h3 lang="en">Visual Identity for Tech Startup</h3>
+        <p lang="en">Comprehensive visual identity design for a tech startup, including logo, colors, fonts, and brand applications across various platforms.</p>
+        <a href="#" class="project-link" onclick="openProjectModal('visual-identity')" lang="en">View Project <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+    
+    <div class="project-card">
+      <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80" alt="تصميم تطبيق">
+      <div class="project-info">
+        <h3 lang="ar">تطبيق جوال لخدمة توصيل طعام</h3>
+        <p lang="ar">تصميم واجهات مستخدم لتطبيق جوال لخدمة توصيل طعام، مع التركيز على البساطة وسهولة الاستخدام وسرعة الوصول للخدمات المطلوبة.</p>
+        <a href="#" class="project-link" onclick="openProjectModal('food-app')" lang="ar">عرض المشروع <i class="fas fa-arrow-left"></i></a>
+        <h3 lang="en">Food Delivery Mobile App</h3>
+        <p lang="en">User interface design for a food delivery mobile application, focusing on simplicity, ease of use, and quick access to required services.</p>
+        <a href="#" class="project-link" onclick="openProjectModal('food-app')" lang="en">View Project <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+    
+    <div class="project-card">
+      <img src="https://images.unsplash.com/photo-1522542550221-31fd19575a2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="هوية بصرية">
+      <div class="project-info">
+        <h3 lang="ar">تجديد هوية مؤسسة تعليمية</h3>
+        <p lang="ar">إعادة تصميم الهوية البصرية لمؤسسة تعليمية رائدة، مع الحفاظ على القيم الأساسية مع تقديم صورة عصرية وجذابة للجيل الجديد.</p>
+        <a href="#" class="project-link" onclick="openProjectModal('education-rebrand')" lang="ar">عرض المشروع <i class="fas fa-arrow-left"></i></a>
+        <h3 lang="en">Rebranding Educational Institution</h3>
+        <p lang="en">Redesigning the visual identity of a leading educational institution, preserving core values while presenting a modern and attractive image for the new generation.</p>
+        <a href="#" class="project-link" onclick="openProjectModal('education-rebrand')" lang="en">View Project <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+    
+    <div class="project-card">
+      <img src="https://images.unsplash.com/photo-1607082350899-7e105aa886ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="يمن تشات">
+      <div class="project-info">
+        <h3 lang="ar">كُتالوج يمن تشات</h3>
+        <p lang="ar">تصميم وتطوير كتالوج إلكتروني ليمن تشات، يقدم تجربة مستخدم متميزة مع واجهة بصرية جذابة وسهولة في التصفح والبحث.</p>
+        <a href="https://wa.me/c/967771241839" target="_blank" class="project-link" lang="ar">عرض الكتالوج <i class="fas fa-arrow-left"></i></a>
+        <h3 lang="en">Yemen Chat Catalog</h3>
+        <p lang="en">Design and development of an electronic catalog for Yemen Chat, providing an exceptional user experience with an attractive visual interface and ease of browsing and searching.</p>
+        <a href="https://wa.me/c/967771241839" target="_blank" class="project-link" lang="en">View Catalog <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials" class="section">
+  <h2 lang="ar"><i class="fas fa-comment-alt"></i> ...آراء العملاء</h2>
+  <h2 lang="en"><i class="fas fa-comment-alt"></i> Client Testimonials</h2>
+  
+  <div class="grid">
+    <div class="testimonial-card">
+      <div class="testimonial-content" lang="ar">
+        "متولي يتميز بالإبداع والدقة في العمل. قام بتصميم وتطوير موقعنا الإلكتروني بشكل احترافي، وكان دائمًا متجاوبًا مع متطلباتنا. أنصح بالتعامل معه لكل من يبحث عن حلول رقمية متميزة."
+      </div>
+      <div class="testimonial-content" lang="en">
+        "Metwally is creative and precise in his work. He designed and developed our website professionally and was always responsive to our requirements. I recommend working with him for anyone seeking outstanding digital solutions."
+      </div>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">م.س</div>
+        <div class="testimonial-info">
+          <div class="testimonial-name" lang="ar">محمد السقاف</div>
+          <div class="testimonial-name" lang="en">Mohammed Al-Saqqaf</div>
+          <div class="testimonial-role" lang="ar">مدير شركة التقنية الحديثة</div>
+          <div class="testimonial-role" lang="en">Director, Modern Tech Company</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="testimonial-card">
+      <div class="testimonial-content" lang="ar">
+        "تعاملت مع متولي في مشروع تطوير تطبيق جوال، وأذهلني التزامه بالمواعيد وجودة العمل. استطاع فهم احتياجات العمل وتحويلها إلى حلول عملية وفعالة. بالتأكيد سأعمل معه مرة أخرى في المستقبل."
+      </div>
+      <div class="testimonial-content" lang="en">
+        "I worked with Metwally on a mobile app development project, and I was amazed by his commitment to deadlines and quality of work. He was able to understand business needs and transform them into practical and effective solutions. I will definitely work with him again in the future."
+      </div>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">س.ع</div>
+        <div class="testimonial-info">
+          <div class="testimonial-name" lang="ar">سارة عبدالله</div>
+          <div class="testimonial-name" lang="en">Sarah Abdullah</div>
+          <div class="testimonial-role" lang="ar">مؤسسة تطبيق طلبات</div>
+          <div class="testimonial-role" lang="en">Founder, Talabat App</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="certifications" class="section">
+  <h2 lang="ar"><i class="fas fa-award"></i>... الشهادات والاعتمادات</h2>
+  <h2 lang="en"><i class="fas fa-award"></i> Certifications</h2>
+  
+  <div class="certification-grid">
+    <div class="certification-card">
+      <div class="certification-image">
+        <i class="fab fa-google"></i>
+      </div>
+      <div class="certification-info">
+        <h3 class="certification-title" lang="ar">مطور ويب معتمد من Google</h3>
+        <h3 class="certification-title" lang="en">Google Certified Web Developer</h3>
+        <p class="certification-org" lang="ar">Google - 2023</p>
+        <p class="certification-org" lang="en">Google - 2023</p>
+        <a href="#" class="certification-link" lang="ar">عرض الشهادة <i class="fas fa-arrow-left"></i></a>
+        <a href="#" class="certification-link" lang="en">View Certificate <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+    
+    <div class="certification-card">
+      <div class="certification-image">
+        <i class="fab fa-microsoft"></i>
+      </div>
+      <div class="certification-info">
+        <h3 class="certification-title" lang="ar">محترف Azure معتمد</h3>
+        <h3 class="certification-title" lang="en">Microsoft Certified Azure Professional</h3>
+        <p class="certification-org" lang="ar">Microsoft - 2024</p>
+        <p class="certification-org" lang="en">Microsoft - 2024</p>
+        <a href="#" class="certification-link" lang="ar">عرض الشهادة <i class="fas fa-arrow-left"></i></a>
+        <a href="#" class="certification-link" lang="en">View Certificate <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+    
+    <div class="certification-card">
+      <div class="certification-image">
+        <i class="fab fa-aws"></i>
+      </div>
+      <div class="certification-info">
+        <h3 class="certification-title" lang="ar">أخصائي حلول AWS معتمد</h3>
+        <h3 class="certification-title" lang="en">AWS Certified Solutions Architect</h3>
+        <p class="certification-org" lang="ar">Amazon Web Services - 2023</p>
+        <p class="certification-org" lang="en">Amazon Web Services - 2023</p>
+        <a href="#" class="certification-link" lang="ar">عرض الشهادة <i class="fas fa-arrow-left"></i></a>
+        <a href="#" class="certification-link" lang="en">View Certificate <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="section">
+  <h2 lang="ar"><i class="fas fa-envelope"></i> ...تواصل معي</h2>
+  <h2 lang="en"><i class="fas fa-envelope"></i> Contact Me</h2>
+  
+  <div class="grid">
+    <div class="card">
+      <i class="fas fa-phone-alt"></i>
+      <h3 lang="ar">الهاتف</h3>
+      <p lang="ar">‎+967 771 241 839</p>
+      <p lang="ar">‎+967 716 225 653</p>
+      <h3 lang="en">Phone</h3>
+      <p lang="en">‎+967 771 241 839</p>
+      <p lang="en">‎+967 716 225 653</p>
+    </div>
+    
+    <div class="card">
+      <i class="fas fa-envelope"></i>
+      <h3 lang="ar">البريد الإلكتروني</h3>
+      <p lang="ar">metwallywessapi@gmail.com</p>
+      <p lang="ar">mwessapi@proton.me</p>
+      <h3 lang="en">Email</h3>
+      <p lang="en">metwallywessapi@gmail.com</p>
+      <p lang="en">mwessapi@proton.me</p>
+    </div>
+    
+    <div class="card">
+      <i class="fas fa-map-marker-alt"></i>
+      <h3 lang="ar">الموقع</h3>
+      <p lang="ar">صنعاء، اليمن</p>
+      <p lang="ar">خدماتي متاحة لجميع أنحاء العالم</p>
+      <h3 lang="en">Location</h3>
+      <p lang="en">Sana'a, Yemen</p>
+      <p lang="en">Services available worldwide</p>
+    </div>
+  </div>
+  
+  <div class="contact-form">
+    <h3 lang="ar">أرسل لي رسالة مباشرة</h3>
+    <h3 lang="en">Send Me a Direct Message</h3>
+    
+    <form id="contactForm">
+      <div class="form-group">
+        <label for="name" lang="ar">الاسم الكامل</label>
+        <label for="name" lang="en">Full Name</label>
+        <input type="text" id="name" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="email" lang="ar">البريد الإلكتروني</label>
+        <label for="email" lang="en">Email Address</label>
+        <input type="email" id="email" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="subject" lang="ar">موضوع الرسالة</label>
+        <label for="subject" lang="en">Subject</label>
+        <input type="text" id="subject" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="message" lang="ar">الرسالة</label>
+        <label for="message" lang="en">Message</label>
+        <textarea id="message" required></textarea>
+      </div>
+      
+      <button type="submit" class="submit-btn" lang="ar">
+        <i class="fas fa-paper-plane"></i> أرسل الرسالة
+      </button>
+      <button type="submit" class="submit-btn" lang="en">
+        <i class="fas fa-paper-plane"></i> Send Message
+      </button>
+    </form>
+  </div>
+  
+  <div class="social">
+    <a href="https://github.com/mwsapi" target="_blank" title="GitHub">
+      <i class="fab fa-github"></i>
+    </a>
+    <a href="https://www.instagram.com/mwsapi100" target="_blank" title="Instagram">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a href="https://www.facebook.com/profile.php?id=61564961733937" target="_blank" title="Facebook">
+      <i class="fab fa-facebook-f"></i>
+    </a>
+    <a href="https://wa.me/967771241839" target="_blank" title="WhatsApp">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+    <a href="https://twitter.com/" target="_blank" title="Twitter">
+      <i class="fab fa-twitter"></i>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-content">
+    <div class="footer-column">
+      <h3 lang="ar">متولي الوصابي</h3>
+      <h3 lang="en">Metwally Al-Wessapi</h3>
+      <p lang="ar">مطور ومصمم محترف | خبير حلول رقمية</p>
+      <p lang="en">Professional Developer & Designer | Digital Solutions Expert</p>
+    </div>
+    
+    <div class="footer-column">
+      <h3 lang="ar">روابط سريعة</h3>
+      <h3 lang="en">Quick Links</h3>
+      <ul>
+        <li><a href="#about" lang="ar"><i class="fas fa-arrow-left"></i> نبذة عني</a></li>
+        <li><a href="#cv" lang="ar"><i class="fas fa-arrow-left"></i> السيرة الذاتية</a></li>
+        <li><a href="#skills" lang="ar"><i class="fas fa-arrow-left"></i> مهاراتي</a></li>
+        <li><a href="#services" lang="ar"><i class="fas fa-arrow-left"></i> خدماتي</a></li>
+        <li><a href="#contact" lang="ar"><i class="fas fa-arrow-left"></i> تواصل</a></li>
+        
+        <li><a href="#about" lang="en"><i class="fas fa-arrow-right"></i> About Me</a></li>
+        <li><a href="#cv" lang="en"><i class="fas fa-arrow-right"></i> Curriculum Vitae</a></li>
+        <li><a href="#skills" lang="en"><i class="fas fa-arrow-right"></i> My Skills</a></li>
+        <li><a href="#services" lang="en"><i class="fas fa-arrow-right"></i> My Services</a></li>
+        <li><a href="#contact" lang="en"><i class="fas fa-arrow-right"></i> Contact</a></li>
+      </ul>
+    </div>
+    
+    <div class="footer-column">
+      <h3 lang="ar">تواصل معي</h3>
+      <h3 lang="en">Contact Me</h3>
+      <ul>
+        <li><i class="fas fa-phone-alt"></i> ‎+967 771 241 839</li>
+        <li><i class="fas fa-envelope"></i> metwallywessapi@gmail.com</li>
+        <li><i class="fas fa-map-marker-alt"></i> <span lang="ar">صنعاء، اليمن</span><span lang="en">Sana'a, Yemen</span></li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="copyright">
+    <p lang="ar">جميع الحقوق محفوظة © 2025 متولي الوصابي</p>
+    <p lang="en">© 2025 Metwally Al-Wessapi. All rights reserved.</p>
+  </div>
+</footer>
+
+<button onclick="scrollToTop()" id="scrollToTopBtn" title="Go to top">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
+<!-- Project Modals -->
+<div id="projectModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeProjectModal()">&times;</span>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+// Preloader
+window.addEventListener('load', function() {
+  const preloader = document.getElementById('preloader');
+  preloader.classList.add('hidden');
+  document.body.style.overflow = 'auto';
+  
+  // Initialize particles.js
+  particlesJS("particles-js", {
+    particles: {
+      number: { value: 80, density: { enable: true, value_area: 800 } },
+      color: { value: "#ffffff" },
+      shape: { type: "circle" },
+      opacity: { value: 0.5, random: true },
+      size: { value: 3, random: true },
+      line_linked: {
+        enable: true,
+        distance: 150,
+        color: "#ffffff",
+        opacity: 0.2,
+        width: 1
+      },
+      move: {
+        enable: true,
+        speed: 2,
+        direction: "none",
+        random: true,
+        out_mode: "out"
+      }
+    },
+    interactivity: {
+      detect_on: "canvas",
+      events: {
+        onhover: { enable: true, mode: "repulse" },
+        onclick: { enable: true, mode: "push" }
+      }
+    }
+  });
+});
+
+function toggleLanguage() {
+  document.body.classList.toggle('lang-en');
+  const btn = document.querySelector('button.lang-switch');
+  if (document.body.classList.contains('lang-en')) {
+    btn.innerHTML = '<i class="fas fa-globe"></i> العربية';
+  } else {
+    btn.innerHTML = '<i class="fas fa-globe"></i> English';
+  }
+  
+  // Play sound effect
+  const sound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3');
+  sound.volume = 0.3;
+  sound.play();
+}
+
+// شريط التقدم & Scroll-to-top button visibility
+window.onscroll = function() {
+  const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrolled = (winScroll / height) * 100;
+  document.getElementById("myBar").style.width = scrolled + "%";
+  
+  // إضافة تأثير التمرير للبطاقات
+  const cards = document.querySelectorAll('.card, .project-card');
+  cards.forEach(card => {
+    const cardTop = card.getBoundingClientRect().top;
+    const windowHeight = window.innerHeight;
+    
+    if (cardTop < windowHeight * 0.85) {
+      card.classList.add('visible');
+    }
+  });
+  
+  // Check section visibility
+  const sections = document.querySelectorAll('.section');
+  sections.forEach(section => {
+    const sectionTop = section.getBoundingClientRect().top;
+    const windowHeight = window.innerHeight;
+    
+    if (sectionTop < windowHeight * 0.75) {
+      section.classList.add('visible');
+    }
+  });
+  
+  // تغيير نمط شريط التنقل عند التمرير
+  const navbar = document.getElementById('navbar');
+  if (window.scrollY > 100) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+
+  // Show/Hide Scroll-to-top button
+  const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+  if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+    scrollToTopBtn.style.display = "block";
+  } else {
+    scrollToTopBtn.style.display = "none";
+  }
+};
+
+// Scroll to Top Function
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+  const sound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-modern-technology-select-3124.mp3');
+  sound.volume = 0.3;
+  sound.play();
+}
+
+// التمرير السلس للروابط
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      window.scrollTo({
+        top: target.offsetTop - 80,
+        behavior: 'smooth'
+      });
+      
+      // Play sound effect
+      const sound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-modern-technology-select-3124.mp3');
+      sound.volume = 0.3;
+      sound.play();
+    }
+  });
+});
+
+// نموذج الاتصال
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  // Play sound effect
+  const sound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-unlock-game-notification-253.mp3');
+  sound.volume = 0.3;
+  sound.play();
+  
+  // Simulate form submission (in a real scenario, you'd send data to a server here)
+  alert(document.body.classList.contains('lang-en') ? 
+        'Your message has been sent successfully! I will contact you soon.' : 
+        'تم إرسال رسالتك بنجاح! سأتصل بك قريبًا.');
+  
+  // Reset form
+  this.reset();
+});
+
+// Initialize animations on page load
+window.addEventListener('load', function() {
+  const cards = document.querySelectorAll('.card, .project-card');
+  cards.forEach((card, index) => {
+    card.style.transitionDelay = `${index * 0.1}s`;
+  });
+  
+  // Add visible class to cards that are already in view
+  setTimeout(() => {
+    const cards = document.querySelectorAll('.card, .project-card');
+    cards.forEach(card => {
+      const cardTop = card.getBoundingClientRect().top;
+      const windowHeight = window.innerHeight;
+      
+      if (cardTop < windowHeight * 0.85) {
+        card.classList.add('visible');
+      }
+    });
+  }, 500);
+  
+  // Initialize skill bars
+  const skillBars = document.querySelectorAll('.skill-bar');
+  skillBars.forEach(bar => {
+    const value = bar.getAttribute('data-value');
+    const progress = bar.querySelector('.skill-progress');
+    progress.style.width = value + '%';
+  });
+});
+
+// Dark/Light mode toggle
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = themeToggle.querySelector('i');
+
+const currentTheme = localStorage.getItem('theme') || 'light';
+if (currentTheme === 'dark') {
+  document.body.classList.add('dark-mode');
+  themeIcon.classList.remove('fa-moon');
+  themeIcon.classList.add('fa-sun');
+}
+
+themeToggle.addEventListener('click', () => {
+  document.body.classList.toggle('dark-mode');
+  
+  if (document.body.classList.contains('dark-mode')) {
+    themeIcon.classList.remove('fa-moon');
+    themeIcon.classList.add('fa-sun');
+    localStorage.setItem('theme', 'dark');
+  } else {
+    themeIcon.classList.remove('fa-sun');
+    themeIcon.classList.add('fa-moon');
+    localStorage.setItem('theme', 'light');
+  }
+  
+  // Play sound effect
+  const sound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-modern-technology-select-3124.mp3');
+  sound.volume = 0.3;
+  sound.play();
+});
+
+// Project Modals
+function openProjectModal(projectId) {
+  event.preventDefault();
+  const modal = document.getElementById('projectModal');
+  const modalContent = document.getElementById('modalContent');
+  
+  // Based on projectId, set the content
+  let title = '';
+  let description = '';
+  let features = [];
+  
+  if (projectId === 'ai-patent') {
+    title = document.body.classList.contains('lang-en') ? 
+      'Patent in Artificial Intelligence' : 'براءة اختراع في مجال الذكاء الاصطناعي';
+    
+    description = document.body.classList.contains('lang-en') ? 
+      'This innovative patent introduces a groundbreaking approach to artificial intelligence that revolutionizes how machines learn and adapt. The technology focuses on creating more efficient neural networks that require less computational power while delivering superior results. The patent has been recognized by leading tech institutions for its potential to transform industries from healthcare to finance.' : 
+      'تقدم براءة الاختراع هذه نهجًا مبتكرًا في مجال الذكاء الاصطناعي يحدث ثورة في كيفية تعلم الآلات وتكيفها. تركز التكنولوجيا على إنشاء شبكات عصبية أكثر كفاءة تتطلب طاقة حاسوبية أقل مع تقديم نتائج فائقة. تم الاعتراف ببراءة الاختراع من قبل المؤسسات التكنولوجية الرائدة لإمكاناتها في تحويل الصناعات من الرعاية الصحية إلى التمويل.';
+    
+    features = document.body.classList.contains('lang-en') ? [
+      'Efficient neural network architecture',
+      'Reduced computational requirements',
+      'Enhanced learning capabilities',
+      'Cross-industry applications',
+      'Patent recognized by international institutions'
+    ] : [
+      'هندسة شبكة عصبية فعالة',
+      'متطلبات حسابية مخفضة',
+      'قدرات تعلم محسنة',
+      'تطبيقات عبر الصناعات',
+      'براءة اختراع معترف بها من قبل مؤسسات دولية'
+    ];
+  } else if (projectId === 'data-system') {
+    title = document.body.classList.contains('lang-en') ? 
+      'Intelligent Data Analysis System' : 'نظام ذكي لتحليل البيانات';
+    
+    description = document.body.classList.contains('lang-en') ? 
+      'The Intelligent Data Analysis System is a comprehensive solution designed to handle massive datasets with ease. Built using Python and TensorFlow, this system provides actionable insights through advanced machine learning algorithms. It features a user-friendly dashboard that visualizes complex data in an intuitive manner, enabling businesses to make data-driven decisions efficiently.' : 
+      'نظام تحليل البيانات الذكي هو حل شامل مصمم للتعامل مع مجموعات البيانات الضخمة بسهولة. تم بناء هذا النظام باستخدام Python و TensorFlow، ويقدم رؤى قابلة للتنفيذ من خلال خوارزميات تعلم الآلة المتقدمة. يتميز النظام بلوحة تحكم سهلة الاستخدام تعرض البيانات المعقدة بطريقة بديهية، مما يمكن الشركات من اتخاذ قرارات تعتمد على البيانات بكفاءة.';
+    
+    features = document.body.classList.contains('lang-en') ? [
+      'Handles massive datasets efficiently',
+      'Built with Python and TensorFlow',
+      'Advanced machine learning algorithms',
+      'User-friendly dashboard',
+      'Actionable insights for decision-making'
+    ] : [
+      'يتعامل مع مجموعات البيانات الضخمة بكفاءة',
+      'مبني باستخدام Python و TensorFlow',
+      'خوارزميات تعلم آلة متقدمة',
+      'لوحة تحكم سهلة الاستخدام',
+      'رؤى قابلة للتنفيذ لاتخاذ القرارات'
+    ];
+  } else if (projectId === 'visual-identity') {
+    title = document.body.classList.contains('lang-en') ? 
+      'Visual Identity for Tech Startup' : 'هوية بصرية لشركة تقنية ناشئة';
+    
+    description = document.body.classList.contains('lang-en') ? 
+      'This comprehensive visual identity project transformed a tech startup\'s brand presence. The design includes a modern logo, color palette, typography system, and brand guidelines that ensure consistency across all platforms. The identity reflects the company\'s innovative spirit while maintaining a professional appearance that resonates with its target audience.' : 
+      'حول مشروع الهوية البصرية الشامل هذا حضور علامة شركة ناشئة في مجال التكنولوجيا. يشمل التصميم شعارًا حديثًا، لوحة ألوان، نظام طباعة، وإرشادات العلامة التجارية التي تضمان الاتساق عبر جميع المنصات. تعكس الهوية روح الشركة المبتكرة مع الحفاظ على مظهر احترافي يلقى صدى لدى الجمهور المستهدف.';
+    
+    features = document.body.classList.contains('lang-en') ? [
+      'Modern and memorable logo design',
+      'Comprehensive color palette',
+      'Typography system',
+      'Brand guidelines for consistency',
+      'Multi-platform application'
+    ] : [
+      'تصميم شعار حديث لا يُنسى',
+      'لوحة ألوان شاملة',
+      'نظام طباعة',
+      'إرشادات العلامة التجارية للاتساق',
+      'تطبيق متعدد المنصات'
+    ];
+  } else if (projectId === 'food-app') {
+    title = document.body.classList.contains('lang-en') ? 
+      'Food Delivery Mobile App' : 'تطبيق جوال لخدمة توصيل طعام';
+    
+    description = document.body.classList.contains('lang-en') ? 
+      'The Food Delivery Mobile App offers a seamless experience for ordering food from local restaurants. The app features an intuitive interface, real-time order tracking, secure payment options, and personalized recommendations. Designed with a focus on user experience, the app has helped increase customer retention by 40% and order frequency by 25% for partner restaurants.' : 
+      'يقدم تطبيق توصيل الطعام تجربة سلسة لطلب الطعام من المطاعم المحلية. يتميز التطبيق بواجهة بديهية، تتبع الطلبات في الوقت الفعلي، خيارات دفع آمنة، وتوصيات مخصصة. تم تصميم التطبيق مع التركيز على تجربة المستخدم، وساعد في زيادة الاحتفاظ بالعملاء بنسبة 40% وتكرار الطلبات بنسبة 25% للمطاعم الشريكة.';
+    
+    features = document.body.classList.contains('lang-en') ? [
+      'Intuitive user interface',
+      'Real-time order tracking',
+      'Secure payment gateway',
+      'Personalized recommendations',
+      'Restaurant management dashboard'
+    ] : [
+      'واجهة مستخدم بديهية',
+      'تتبع الطلبات في الوقت الفعلي',
+      'بوابة دفع آمنة',
+      'توصيات مخصصة',
+      'لوحة تحكم لإدارة المطاعم'
+    ];
+  } else if (projectId === 'education-rebrand') {
+    title = document.body.classList.contains('lang-en') ? 
+      'Rebranding Educational Institution' : 'تجديد هوية مؤسسة تعليمية';
+    
+    description = document.body.classList.contains('lang-en') ? 
+      'This rebranding project revitalized a leading educational institution\'s identity for the digital age. The new visual system maintains the institution\'s respected heritage while presenting a modern, approachable image that appeals to younger generations. The comprehensive identity includes a redesigned logo, color scheme, typography, and extensive brand guidelines for consistent application across all touchpoints.' : 
+      'أعاد مشروع تجديد العلامة التجارية هذا إحياء هوية مؤسسة تعليمية رائدة في العصر الرقمي. يحافظ النظام البصري الجديد على تراث المؤسسة المحترم مع تقديم صورة حديثة وسهلة الوصول تلقى صدى لدى الأجيال الأصغر سنًا. تشمل الهوية الشاملة شعارًا معاد تصميمه، نظام ألوان، طباعة، وإرشادات علامة تجارية شاملة للتطبيق المتسق عبر جميع نقاط الاتصال.';
+    
+    features = document.body.classList.contains('lang-en') ? [
+      'Modernized logo while preserving heritage',
+      'Contemporary color scheme',
+      'Accessible typography system',
+      'Comprehensive brand guidelines',
+      'Multi-channel application strategy'
+    ] : [
+      'تحديث الشعار مع الحفاظ على التراث',
+      'نظام ألوان معاصر',
+      'نظام طباعة سهل الوصول',
+      'إرشادات علامة تجارية شاملة',
+      'استراتيجية تطبيق متعددة القنوات'
+    ];
+  }
+  
+  // Set modal content
+  modalContent.innerHTML = `
+    <div class="modal-header">
+      <h3>${title}</h3>
+    </div>
+    <div class="modal-body">
+      <p>${description}</p>
+      
+      <div class="modal-images">
+        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="Project Image">
+        <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80" alt="Project Image">
+      </div>
+      
+      <h4>${document.body.classList.contains('lang-en') ? 'Key Features' : 'الميزات الرئيسية'}</h4>
+      <div class="modal-features">
+        ${features.map(feature => `
+          <div class="feature-item">
+            <i class="fas fa-check-circle"></i>
+            <span>${feature}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="#contact" class="visit-btn" onclick="closeProjectModal()">
+        ${document.body.classList.contains('lang-en') ? 'Start a Similar Project' : 'ابدأ مشروعًا مماثلًا'}
+      </a>
+    </div>
+  `;
+  
+  // Show modal
+  modal.style.display = "block";
+  document.body.style.overflow = "hidden";
+  
+  // Play sound effect
+  const sound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-modern-technology-select-3124.mp3');
+  sound.volume = 0.3;
+  sound.play();
+}
+
+function closeProjectModal() {
+  const modal = document.getElementById('projectModal');
+  modal.style.display = "none";
+  document.body.style.overflow = "auto";
+}
+</script>
+</body>
+</html>
